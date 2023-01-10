@@ -1,0 +1,294 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  font-family: Arial;
+}
+
+h1, h2, h3 {
+  font-weight: 100;
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.popup {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2000;
+  display: none;
+}
+
+.popup::after {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #000;
+  opacity: .5;
+  top: 0;
+  left: 0;
+  content: '';
+  z-index: -1;
+}
+
+.popup.active {
+  display: block;
+}
+
+.popup>div {
+  width: 500px;
+  height: 400px;
+  background: #EFEEE7;
+  border-radius: 30px;
+  padding: 15px 30px;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.popup section {
+  width: 100%;
+  height: calc( 100% - 50px );
+  flex-direction: column;
+}
+
+.popup section.active[data-scene="1"] ~ footer span#prev {
+  visibility: hidden;
+}
+
+.popup section.active[data-scene="5"] ~ footer span#next,
+.popup section.active[data-scene="5"] ~ footer span#prev {
+  visibility: hidden;
+}
+
+.popup section#error.active ~ footer span#prev,
+.popup section#error.active ~ footer span#next {
+  visibility: hidden;
+}
+
+.popup section.active[data-scene="5"] ~ footer span#close,
+.popup section#error.active ~ footer span#close {
+  display: initial;
+}
+
+.popup section#loading.active ~ footer span {
+  visibility: hidden;
+}
+
+.popup footer {
+  align-self: flex-end;
+}
+
+.popup footer span#close {
+  display: none;
+}
+
+.popup span.button {
+  border: solid 1px #51d6a9;
+  border-radius: 20px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.popup span.button:hover {
+  border: solid 1px #51d6a9;
+  background: #51d6a9;
+}
+
+header.popup section h2,
+header.popup section p {
+  text-align: center;
+}
+
+header.popup footer {
+  align-self: center;
+}
+
+header.popup section {
+  display: flex;
+}
+
+header.popup img {
+  width: 150px;
+  margin: auto;
+}
+
+#error {
+  display: none;
+}
+
+#error img,
+#loading img {
+  width: 100px;
+  margin: auto;
+}
+
+#error h3,
+#loading h3 {
+  font-weight: normal;
+  text-align: center;
+}
+
+.popup.shake>div {
+  animation: shake .5s linear;
+}
+
+@-webkit-keyframes shake {
+  8%, 41% {
+      transform: translateX(-10px);
+  }
+  25%, 58% {
+      transform: translateX(10px);
+  }
+  75% {
+      transform: translateX(-5px);
+  }
+  92% {
+      transform: translateX(5px);
+  }
+  0%, 100% {
+      transform: translateX(0);
+  }
+}
+
+form#travel_form section {
+  display: none;
+}
+
+form#travel_form section label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form#travel_form section label input,
+form#travel_form section label textarea {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #EFEEE7;
+}
+
+form#travel_form section label input.error,
+form#travel_form section label textarea.error {
+  border: 1px solid #FF0000;
+}
+
+form#travel_form section label textarea {
+  height: 100px;
+  font-family: arial;
+}
+
+form#travel_form section small {
+  font-size: 10px;
+  margin-top: 5px;
+}
+
+form#travel_form section.active {
+  display: flex;
+}
+
+form#travel_form section#travel_gear aside {
+  display: flex;
+  flex-direction: row;
+}
+
+form#travel_form section#travel_gear label input {
+  display: none;
+}
+
+form#travel_form section#travel_gear label {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+form#travel_form section#travel_gear label div {
+  border-radius: 10px;
+  border: solid 1px #262626;
+  padding: 10px;
+  background: #fff;
+  height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  opacity: .3;
+}
+
+form#travel_form section#travel_gear label div img {
+  filter: grayscale(100%);
+  width: 100%;
+  height: auto;
+}
+
+form#travel_form section#travel_gear label input:checked + div {
+  border: solid 1px #51d6a9;
+  opacity: 1;
+}
+
+form#travel_form section#travel_gear label input:checked + div img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+form#travel_form section label#terms {
+  display: flex;
+  flex-direction: row;
+  font-size: 11px;
+  margin-top: 10px;
+}
+
+form#travel_form section label#terms input {
+  margin: 0 10px 0 0;
+}
+
+form#travel_form section#sharing h3 {
+  margin: 0 0 5px 0;
+}
+
+form#travel_form section#sharing ul {
+  list-style: none;
+  margin: 0 0 10px 0;
+  padding: 0;
+  height: 200px;
+  display: flex;
+}
+
+form#travel_form section#sharing ul li {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+  width: 25%;
+  margin: 0 10px 0 10px;
+  background-size: cover;
+  background-position: center center;
+  position: relative;
+}
+
+form#travel_form section#sharing ul li h4 {
+  position: absolute;
+  text-align: center;
+  background: #EFEEE7;
+  border-radius: 10px;
+  padding: 7px;
+  opacity: .8;
+  margin-top: 15px;
+  width: 70%;
+  font-size: 7px;
+}
+
+form#travel_form section#sharing ul li img {
+  width: 30px;
+  height: fit-content;
+  align-self: flex-end;
+}
+
+.leaflet-bottom.leaflet-right .leaflet-control {
+  display: none;
+}
