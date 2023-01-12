@@ -5,7 +5,6 @@ body {
   padding: 0;
   display: flex;
   font-family: Arial;
-  overflow: hidden;
 }
 
 h1, h2, h3 {
@@ -325,7 +324,7 @@ form#travel_form section#sharing ul li h4 {
 
 form#travel_form section#sharing ul li img {
   width: 30px;
-  height: fit-content;
+  height: auto;
   align-self: flex-end;
 }
 
@@ -392,7 +391,7 @@ img.leaflet-marker-icon {
   padding: 0;
   display: flex;
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 20px;
 }
 
@@ -405,6 +404,15 @@ img.leaflet-marker-icon {
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
   background: #EFEEE7;
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  background: #51d6a9;
+  border-radius: 12px 12px 0 12px;
+}
+
+.leaflet-container a.leaflet-popup-close-button span {
+  color: #000000;
 }
 
 span#close_icon {
