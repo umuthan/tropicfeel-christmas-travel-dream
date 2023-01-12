@@ -5,6 +5,7 @@ body {
   padding: 0;
   display: flex;
   font-family: Arial;
+  overflow: hidden;
 }
 
 h1, h2, h3 {
@@ -42,8 +43,7 @@ h1, h2, h3 {
 }
 
 .popup>div {
-  width: 500px;
-  height: 400px;
+  width: 80%;
   background: #EFEEE7;
   border-radius: 30px;
   padding: 15px 30px;
@@ -52,6 +52,15 @@ h1, h2, h3 {
   display: flex;
   flex-direction: column;
   position: relative;
+  justify-content: space-between;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets & desktop: */
+  .popup>div {
+    width: 500px;
+    min-height: 400px;
+  }
 }
 
 .popup section {
@@ -66,7 +75,7 @@ h1, h2, h3 {
 
 .popup section.active[data-scene="5"] ~ footer span#next,
 .popup section.active[data-scene="5"] ~ footer span#prev {
-  visibility: hidden;
+  display: none;
 }
 
 .popup section#error.active ~ footer span#prev,
@@ -85,6 +94,8 @@ h1, h2, h3 {
 
 .popup footer {
   align-self: flex-end;
+  padding: 15px 0;
+  margin-top: 15px;
 }
 
 .popup footer span#close,
@@ -200,6 +211,8 @@ form#travel_form section.active {
 form#travel_form section#travel_gear aside {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 form#travel_form section#travel_gear label input {
@@ -207,35 +220,59 @@ form#travel_form section#travel_gear label input {
 }
 
 form#travel_form section#travel_gear label {
-  margin: 0 10px;
+  margin: 0 10px 10px 10px;
+  flex-basis: 40%;
   cursor: pointer;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets & desktop: */
+  form#travel_form section#travel_gear label {
+    margin: 0 10px;
+    flex-basis: 20%;
+  }
 }
 
 form#travel_form section#travel_gear label div {
   border-radius: 10px;
   border: solid 1px #262626;
-  padding: 10px;
-  background: #fff;
-  height: 125px;
+  padding: 15px;
+  height: 100px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  opacity: .3;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 form#travel_form section#travel_gear label div img {
   filter: grayscale(100%);
   width: 100%;
-  height: auto;
+  height: 100%;
+  margin: auto;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  border-radius: 10px;
+  opacity: .2;
+}
+
+form#travel_form section#travel_gear label div span {
+  opacity: .3;
 }
 
 form#travel_form section#travel_gear label input:checked + div {
   border: solid 1px #51d6a9;
-  opacity: 1;
 }
 
 form#travel_form section#travel_gear label input:checked + div img {
   filter: grayscale(0%);
+  opacity: .7;
+}
+
+form#travel_form section#travel_gear label input:checked + div span {
   opacity: 1;
 }
 
