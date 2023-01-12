@@ -9,16 +9,22 @@ function resetForm(form_element) {
   });
 }
 
-var map = L.map('map').setView([0, 0], 2);
+var map = L.map('map').setView([0, 0], 2.5);
 L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
   attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  minZoom: 0,
-  maxZoom: 22,
-  subdomains: 'abcd',
-  accessToken: JawgAccessToken
+	minZoom: 2.5,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: JawgAccessToken,
+  noWrap: true
 }).addTo(map);
-// L.Control.geocoder().addTo(map);
 map.doubleClickZoom.disable();
+
+var bounds = L.latLngBounds([[85,-180], [-85, 180]]);
+map.setMaxBounds(bounds);
+map.on('drag', function() {
+	map.panInsideBounds(bounds, { animate: false });
+});
 
 var geocoder = L.Control.Geocoder.nominatim();
 var travel_form = document.querySelector('form#travel_form');
@@ -53,6 +59,7 @@ map.on('dblclick', function(e){
                       let imgSrc = data.results[i].urls.regular;
                       let share_element = document.querySelector('section#sharing ul li:nth-child('+(i+1)+')');
                       share_element.style.backgroundImage = "url('"+imgSrc+"')";
+                      share_element.setAttribute('data-image', imgSrc);
                       share_element.querySelector('h4 em').innerHTML = cityName;
                   }
               });
@@ -100,9 +107,55 @@ prev_button.onclick = function() {
   prev_scene.classList.add('active');
 };
 
-var close_button = document.querySelector('span#close');
+function close_the_form() {
+  resetForm(travel_form);
+  let active_scenes = document.querySelectorAll('form section.active');
+  active_scenes.forEach(item => {
+    item.classList.remove('active');
+  });
+  let reset_active_scene = travel_form.querySelector('section#loading');
+  if(reset_active_scene) reset_active_scene.classList.add('active');
+  travel_form.classList.remove('active');
+}
 
-close_button.onclick = function() {
+var close_button = document.querySelector('span#close');
+close_button.onclick = function() { close_the_form() };
+
+var close_icon_button = document.querySelector('span#close_icon');
+close_icon_button.onclick = function() { close_the_form() };
+
+var add_button = document.querySelector('span#add');
+var sneaker_image = document.querySelector('img#sneaker').getAttribute('src');
+var backpack_image = document.querySelector('img#backpack').getAttribute('src');
+var jacket_image = document.querySelector('img#jacket').getAttribute('src');
+var accessories_image = document.querySelector('img#accessories').getAttribute('src');
+
+add_button.onclick = function() {
+  let destination_input = travel_form.querySelector('input[name="destination"]');
+  let longitude_input = travel_form.querySelector('input[name="longitude"]');
+  let latitude_input = travel_form.querySelector('input[name="latitude"]');
+  let travel_title_input = travel_form.querySelector('input[name="travel_title"]');
+  let travel_resolution_input = travel_form.querySelector('textarea[name="travel_resolution"]');
+  let traveller_input = travel_form.querySelector('input[name="traveller_name"]');
+  let  = travel_form.querySelector('input[name="latitude"]');
+  let markerOptions = {
+     title: traveller_input.value + ': ' + travel_title_input.value,
+     clickable: true
+  }
+  let marker = L.marker([latitude_input.value, longitude_input.value], markerOptions);
+  let gear_HTML = "<ul>";
+  let check_gear_sneaker = travel_form.querySelector('input[name="sneaker"]');
+  if(check_gear_sneaker.checked) gear_HTML += "<li><img src='"+sneaker_image+"' /></li>";
+  let check_gear_backpack = travel_form.querySelector('input[name="backpack"]');
+  if(check_gear_backpack.checked) gear_HTML += "<li><img src='"+backpack_image+"' /></li>";
+  let check_gear_jacket = travel_form.querySelector('input[name="jacket"]');
+  if(check_gear_jacket.checked) gear_HTML += "<li><img src='"+jacket_image+"' /></li>";
+  let check_gear_accessories = travel_form.querySelector('input[name="accessories"]');
+  if(check_gear_accessories.checked) gear_HTML += "<li><img src='"+accessories_image+"' /></li>";
+  gear_HTML += "</ul>";
+  let get_first_image = travel_form.querySelector("section#sharing ul li:nth-child("+(Math.floor(Math.random() * (4) ) + 1)+")").getAttribute('data-image');
+  marker.bindPopup("<div><h2>"+travel_title_input.value+"</h2><h4>"+traveller_input.value+"</h4><p>"+travel_resolution_input.value+"</p></div><figure style='background-image: url("+get_first_image+");'></figure>"+gear_HTML);
+  marker.addTo(map);
   resetForm(travel_form);
   let active_scenes = document.querySelectorAll('form section.active');
   active_scenes.forEach(item => {
