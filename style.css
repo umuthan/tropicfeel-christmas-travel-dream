@@ -304,10 +304,17 @@ form#travel_form section#sharing ul li {
   justify-content: center;
   height: 100%;
   width: 25%;
-  margin: 0 10px 0 10px;
+  margin: 0 1px;
   background-size: cover;
   background-position: center center;
   position: relative;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets & desktop: */
+  form#travel_form section#sharing ul li {
+    margin: 0 10px;
+  }
 }
 
 form#travel_form section#sharing ul li h4 {
